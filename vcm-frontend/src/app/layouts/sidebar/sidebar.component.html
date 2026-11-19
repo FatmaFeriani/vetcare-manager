@@ -1,0 +1,41 @@
+<aside class="sidebar">
+  <div class="brand">
+    <i class="bi bi-heart-pulse"></i>
+    <span>VetCare Manager</span>
+  </div>
+
+  <nav class="mt-3">
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+      <i class="bi bi-speedometer2"></i> Dashboard
+    </a>
+    <a routerLink="/proprietaires" routerLinkActive="active" class="nav-link">
+      <i class="bi bi-people"></i> Propriétaires
+    </a>
+    <a routerLink="/dossiers" routerLinkActive="active" class="nav-link">
+      <i class="bi bi-folder2-open"></i> Dossiers de soins
+    </a>
+    <a *ngIf="auth.isAdmin()" routerLink="/users" routerLinkActive="active" class="nav-link">
+      <i class="bi bi-person-gear"></i> Utilisateurs
+    </a>
+  </nav>
+
+  <div class="mt-auto" style="position:absolute;bottom:0;width:100%;padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.08);">
+    <div class="d-flex align-items-center gap-2 mb-2" *ngIf="auth.getCurrentUser() as user">
+      <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white"
+           style="width:36px;height:36px;font-size:0.85rem;font-weight:600;">
+        {{ user.prenom?.charAt(0) }}{{ user.nom?.charAt(0) }}
+      </div>
+      <div class="overflow-hidden">
+        <div class="text-white text-truncate" style="font-size:0.85rem;font-weight:600;">
+          {{ user.prenom }} {{ user.nom }}
+        </div>
+        <div class="text-truncate" style="font-size:0.75rem;color:#94a3b8;">
+          {{ user.roles?.[0]?.replace('ROLE_','') || 'Utilisateur' }}
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-sm btn-outline-light w-100" (click)="logout()">
+      <i class="bi bi-box-arrow-right me-1"></i> Déconnexion
+    </button>
+  </div>
+</aside>

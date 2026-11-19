@@ -1,0 +1,85 @@
+<div *ngIf="loading" class="text-center py-5">
+  <div class="spinner-border text-primary"></div>
+</div>
+
+<div *ngIf="!loading && proprietaire">
+  <div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+      <h1 class="page-title">{{ proprietaire.nom }}</h1>
+      <p class="page-subtitle">
+        <a routerLink="/proprietaires" class="text-muted">&larr; Retour</a>
+      </p>
+    </div>
+    <a *ngIf="auth.isAdmin()" [routerLink]="['/proprietaires', proprietaire.id, 'edit']"
+       class="btn btn-outline-primary">
+      <i class="bi bi-pencil me-1"></i> Modifier
+    </a>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <div class="rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center mb-3"
+               style="width:80px;height:80px;font-size:1.8rem;font-weight:700;">
+            {{ proprietaire.nom?.charAt(0) }}
+          </div>
+          <h5 class="mb-1">{{ proprietaire.nom }}</h5>
+          <p class="text-muted mb-0">{{ proprietaire.activite || 'Non renseigné' }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between">
+            <span class="text-muted">Téléphone</span>
+            <span>{{ proprietaire.telephone }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span class="text-muted">Email</span>
+            <span>{{ proprietaire.email }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span class="text-muted">Adresse</span>
+            <span>{{ proprietaire.adresse || '—' }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Dossiers de soins ({{ dossiers.length }})</span>
+          <a routerLink="/dossiers/nouveau" [queryParams]="{proprietaireId: proprietaire.id}"
+             class="btn btn-sm btn-primary">
+            <i class="bi bi-plus"></i> Ajouter
+          </a>
+        </div>
+        <div class="card-body p-0">
+          <div *ngIf="dossiers.length === 0" class="empty-state py-4">
+            <p class="mb-0">Aucun dossier de soins</p>
+          </div>
+          <table class="table table-hover mb-0" *ngIf="dossiers.length > 0">
+            <thead>
+              <tr>
+                <th>Libellé</th>
+                <th>Durée</th>
+                <th>Budget</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of dossiers">
+                <td class="fw-semibold">{{ d.libelle }}</td>
+                <td>{{ d.duree }} j</td>
+                <td>{{ d.budget | number:'1.0-0' }} TND</td>
+                <td class="text-end">
+                  <a [routerLink]="['/dossiers', d.id]" class="btn btn-sm btn-outline-info">
+                    <i class="bi bi-eye"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

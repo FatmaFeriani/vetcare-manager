@@ -1,0 +1,73 @@
+<div class="mb-4">
+  <h1 class="page-title">Dashboard</h1>
+  <p class="page-subtitle">Bienvenue, {{ userName }} 👋</p>
+</div>
+
+<div class="row g-3" *ngIf="!loading">
+  <div class="col-md-4">
+    <div class="stat-card">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <div class="text-muted mb-1" style="font-size:0.85rem;">Propriétaires</div>
+          <div class="fs-3 fw-bold">{{ stats.totalProprietaires }}</div>
+        </div>
+        <div class="icon-box bg-primary-subtle text-primary">
+          <i class="bi bi-people"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="stat-card">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <div class="text-muted mb-1" style="font-size:0.85rem;">Dossiers de soins</div>
+          <div class="fs-3 fw-bold">{{ stats.totalDossiers }}</div>
+        </div>
+        <div class="icon-box bg-success-subtle text-success">
+          <i class="bi bi-folder2-open"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="stat-card">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <div class="text-muted mb-1" style="font-size:0.85rem;">Budget total (TND)</div>
+          <div class="fs-3 fw-bold">{{ stats.budgetTotal | number:'1.0-0' }}</div>
+        </div>
+        <div class="icon-box bg-warning-subtle text-warning">
+          <i class="bi bi-cash-stack"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading" class="text-center py-5">
+  <div class="spinner-border text-primary"></div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-header">Accès rapide</div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <a routerLink="/proprietaires" class="btn btn-outline-primary w-100 py-3">
+          <i class="bi bi-people me-2"></i> Gérer les propriétaires
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a routerLink="/dossiers" class="btn btn-outline-success w-100 py-3">
+          <i class="bi bi-folder-plus me-2"></i> Gérer les dossiers
+        </a>
+      </div>
+      <div class="col-md-4" *ngIf="isAdmin">
+        <a routerLink="/users" class="btn btn-outline-secondary w-100 py-3">
+          <i class="bi bi-person-gear me-2"></i> Gérer les utilisateurs
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

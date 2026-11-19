@@ -1,0 +1,57 @@
+<div *ngIf="loading" class="text-center py-5">
+  <div class="spinner-border text-primary"></div>
+</div>
+
+<div *ngIf="!loading && dossier">
+  <div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+      <h1 class="page-title">{{ dossier.libelle }}</h1>
+      <p class="page-subtitle">
+        <a routerLink="/dossiers" class="text-muted">&larr; Retour</a>
+      </p>
+    </div>
+    <a *ngIf="auth.isAdmin()" [routerLink]="['/dossiers', dossier.id, 'edit']"
+       class="btn btn-outline-primary">
+      <i class="bi bi-pencil me-1"></i> Modifier
+    </a>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">Informations du dossier</div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-sm-4 text-muted">Libellé</div>
+            <div class="col-sm-8 fw-semibold">{{ dossier.libelle }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-4 text-muted">Durée</div>
+            <div class="col-sm-8">{{ dossier.duree }} jours</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-4 text-muted">Budget</div>
+            <div class="col-sm-8">{{ dossier.budget | number:'1.2-2' }} TND</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-4 text-muted">Description</div>
+            <div class="col-sm-8">{{ dossier.description || '—' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">Propriétaire</div>
+        <div class="card-body" *ngIf="dossier.proprietaire">
+          <h5>{{ dossier.proprietaire.nom }}</h5>
+          <p class="mb-1 text-muted">{{ dossier.proprietaire.telephone }}</p>
+          <p class="mb-0 text-muted">{{ dossier.proprietaire.email }}</p>
+          <a [routerLink]="['/proprietaires', dossier.proprietaire.id]" class="btn btn-sm btn-outline-primary mt-3">
+            Voir le propriétaire
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

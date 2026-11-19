@@ -1,0 +1,48 @@
+<div class="mb-4">
+  <h1 class="page-title">{{ isEdit ? 'Modifier' : 'Ajouter' }} un dossier de soins</h1>
+  <p class="page-subtitle">
+    <a routerLink="/dossiers" class="text-muted">&larr; Retour à la liste</a>
+  </p>
+</div>
+
+<div class="card" style="max-width:640px;">
+  <div class="card-body">
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label class="form-label">Libellé *</label>
+        <input type="text" class="form-control" formControlName="libelle"
+               placeholder="ex. Vaccination annuelle de Rex">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Propriétaire *</label>
+        <select class="form-select" formControlName="proprietaireId">
+          <option [ngValue]="null" disabled>Sélectionner un propriétaire</option>
+          <option *ngFor="let p of proprietaires" [ngValue]="p.id">{{ p.nom }}</option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Durée (jours) *</label>
+          <input type="number" class="form-control" formControlName="duree" min="1">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Budget (TND) *</label>
+          <input type="number" class="form-control" formControlName="budget" min="0.01" step="0.01">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" formControlName="description" rows="3"
+                  placeholder="Espèce, race, symptômes, remarques..."></textarea>
+      </div>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="loading || form.invalid">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+          {{ isEdit ? 'Mettre à jour' : 'Créer' }}
+        </button>
+        <a routerLink="/dossiers" class="btn btn-outline-secondary">Annuler</a>
+      </div>
+    </form>
+  </div>
+</div>
