@@ -31,10 +31,10 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // Create default admin if not exist
-        if (!userRepository.existsByLogin("admin@pethealth.com")) {
+        if (!userRepository.existsByLogin("adminpethealth@gmail.com")) {
             Role adminRole = roleRepository.findByLibelle(RoleName.ADMIN).orElseThrow();
             User admin = User.builder()
-                    .login("admin@pethealth.com")
+                    .login("adminpethealth@gmail.com")
                     .password(passwordEncoder.encode("admin123"))
                     .nom("Admin")
                     .prenom("VetCare")
@@ -42,7 +42,7 @@ public class DataInitializer implements CommandLineRunner {
                     .roles(Set.of(adminRole))
                     .build();
             userRepository.save(admin);
-            System.out.println(">>> Compte admin créé : admin@pethealth.com / admin123");
+            System.out.println(">>> Compte admin créé : adminpethealth@gmail.com / admin123");
         }
     }
 }

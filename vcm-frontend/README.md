@@ -51,7 +51,7 @@ Pour le déploiement dans le JAR Spring Boot, copiez le contenu de ce dossier da
 
 | Email                 | Mot de passe | Rôle           |
 |-----------------------|--------------|----------------|
-| admin@pethealth.com   | admin123     | ADMIN          |
+| adminpethealth@gmail.com | admin123  | ADMIN          |
 | collab@pethealth.com  | collab123    | COLLABORATEUR  |
 
 *(Vérifiez les identifiants exacts dans `DataInitializer.java` du backend)*

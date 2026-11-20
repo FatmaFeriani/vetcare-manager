@@ -1,6 +1,8 @@
 package com.sip.vcm.services;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     private final JavaMailSender mailSender;
 
@@ -33,8 +37,8 @@ public class EmailService {
             ));
             mailSender.send(message);
         } catch (Exception e) {
-            // Log the error but don't fail the registration
-            System.err.println("Échec d'envoi de l'email de notification : " + e.getMessage());
+            // A mail delivery failure should not undo account registration.
+            logger.error("Failed to send new-account notification to {}", adminEmail, e);
         }
     }
 }

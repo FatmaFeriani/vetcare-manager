@@ -6,7 +6,7 @@ Application de gestion de clinique vétérinaire – Partie Backend.
 
 - **Java 17**
 - **Spring Boot 3.2.5**
-- **Spring Data JPA** + **MySQL**
+- **Spring Data JPA** + **PostgreSQL**
 - **Spring Security** + **JWT**
 - **Spring Mail**
 - **Maven**
@@ -15,17 +15,28 @@ Application de gestion de clinique vétérinaire – Partie Backend.
 
 - JDK 17+
 - Maven 3.8+
-- MySQL 8.x (base `vcm_db` créée automatiquement)
+- PostgreSQL (base `vcm_db` créée au préalable)
 
 ## Configuration
 
-Modifier `src/main/resources/application.properties` :
+La configuration locale utilise PostgreSQL sur `localhost:5432`, avec l'utilisateur `postgres` et le mot de passe `root` par défaut. Si besoin, définissez `DB_PASSWORD` avant de lancer l'application. `DB_USERNAME` et `JDBC_DATABASE_URL` peuvent aussi remplacer l'utilisateur et l'URL par défaut.
 
-```properties
-spring.datasource.username=root
-spring.datasource.password=votre_mot_de_passe
-spring.mail.username=votre.email@gmail.com
-spring.mail.password=votre-app-password
+Lorsqu'un compte est créé via `/api/auth/register`, l'application envoie une notification à `adminpethealth@gmail.com`. Pour activer l'envoi, configurez un compte Gmail expéditeur et son mot de passe d'application (avec la validation en deux étapes activée) :
+
+```powershell
+$env:MAIL_USERNAME = "adminpethealth@gmail.com"
+$env:MAIL_PASSWORD = "mot_de_passe_application_gmail"
+$env:ADMIN_EMAIL = "adminpethealth@gmail.com"
+```
+
+Le mot de passe d'application est fourni par Google; le mot de passe normal du compte Gmail ne convient pas. Gardez-le dans une variable d'environnement et ne le commitez pas dans le dépôt.
+
+Dans PowerShell :
+
+```powershell
+$env:DB_USERNAME = "postgres"
+$env:DB_PASSWORD = "root"
+mvn spring-boot:run
 ```
 
 ## Lancement
@@ -39,7 +50,7 @@ L'API démarre sur `http://localhost:8080`.
 
 ## Compte admin par défaut
 
-- **Login** : `admin@pethealth.com`
+- **Login** : `adminpethealth@gmail.com`
 - **Mot de passe** : `admin123`
 
 ## Endpoints principaux
